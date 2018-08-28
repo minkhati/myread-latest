@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import noCoverImage from '../icons/no-cover-image.png';
 
@@ -65,6 +66,12 @@ const ShowBook = ({ book, books, onChangeShelf }) => {
       </div>
     </li>
   );
+};
+
+ShowBook.propTypes = {
+  book: PropTypes.object.isRequired,
+  books: PropTypes.array.isRequired,
+  onChangeShelf: PropTypes.func.isRequired
 };
 
 export default ShowBook;
