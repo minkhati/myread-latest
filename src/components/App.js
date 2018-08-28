@@ -10,15 +10,31 @@ class BooksApp extends React.Component {
   };
 
   componentDidMount() {
-    BooksAPI.getAll().then(books => console.log(books.length));
+    BooksAPI.getAll().then(books =>
+      this.setState({
+        books
+      })
+    );
   }
 
+  handleChangeShelf = (newBook: any, newShelf: string) => {
+    BooksAPI.update(newBook, newShelf).then(response => {
+      newBook.shelf = newShelf;
+      var updatedBooks = this.state.books.filter(
+        curBook => curBook.id !== newBook.id
+      );
+
+      updatedBooks.push(newBook);
+      this.setState({ books: updatedBooks });
+    });
+  };
+
   render() {
-    const books = this.state;
+    const { books } = this.state;
 
     return (
       <div className="app">
-        <ListBooks />
+        <ListBooks books={books} onChangeShelf={this.handleChangeShelf} />
       </div>
     );
   }
